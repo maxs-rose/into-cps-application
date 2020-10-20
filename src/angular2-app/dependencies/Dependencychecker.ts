@@ -50,8 +50,6 @@ const { dialog } = require('electron');
       console.log("the java dependency check subprocess has been closed");
     });
   }
-/* }
- */
 
 // check if python is running and which version no working
 

@@ -37,10 +37,21 @@ describe('The Dependency Checker', function () {
   })
 
   it('should execute javascript', function () {
-    return this.app.client.waitUntilWindowLoaded().then( app => {
+    return this.app.client.waitUntilWindowLoaded().then( () => {
       this.app.webContents.executeJavaScript('1 + 2')
       .then(function (result) {
         console.log(result) // prints 3
+        })
+    }) 
+
+  })
+
+  // test function implemented directly in main.js for now.
+  it('should execute javascript function', function () {
+    return this.app.client.waitUntilWindowLoaded().then( () => {
+      this.app.webContents.executeJavaScript('test(1)')
+      .then(function (result) {
+        console.log(result) 
         })
     }) 
 
