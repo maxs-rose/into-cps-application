@@ -8,18 +8,15 @@ const path = require('path')
 describe('The Dependency Checker', function () {
   this.timeout(100000)
 
-
-
-  beforeEach(function () {
+  before(function () {
     this.app = new Application({
       path: electronPath,
       args: [path.join(__dirname, '..')]
     })
-
     return this.app.start().then(app => {return app.client.waitUntilWindowLoaded()})
   })
 
-  afterEach(function () {
+  after(function () {
     if (this.app && this.app.isRunning()) {
       return this.app.stop()
     }
@@ -36,7 +33,7 @@ describe('The Dependency Checker', function () {
   
   })
 
-  it('should execute javascript', function () {
+  xit('should execute javascript', function () {
     return this.app.client.waitUntilWindowLoaded().then( () => {
       this.app.webContents.executeJavaScript('1 + 2')
       .then(function (result) {
@@ -46,15 +43,34 @@ describe('The Dependency Checker', function () {
 
   })
 
+  function mathtest(value) {
+    return value + value;
+  }
+
   // test function implemented directly in main.js for now.
-  it('should execute javascript function', function () {
-    return this.app.client.waitUntilWindowLoaded().then( () => {
-      this.app.webContents.executeJavaScript('test(1)')
+  xit('should execute javascript function', function () {
+    return this.app.webContents.executeJavaScript(
+    'const { remote } = require("electron");' +
+    'const mainProcess = remote.require("./main.js");' +
+    'mainProcess.test(1);'
+      )
       .then(function (result) {
         console.log(result) 
         })
-    }) 
 
+  })
+
+  it('should execute javascript dialog', function () {
+    return this.app.webContents.executeJavaScript(
+      'const {spawn} = require("child_process");' + 
+          'const { dialog, shell } = require("electron");' + 
+          'const ls = spawn("java", ["-version"],{shell : true});' +
+        'ls.on("error", err => { console.error(err); return false; });' +
+        ' ls.on("close", (code, signal) => { if (code != 0) { dialog.showMessageBox( {title: "error", buttons: ["OK"], message: "Java wasn´t detected on your system \n" + "JRE is needed to run the COE"});}' + 
+        'console.log("the java dependency check subprocess has been closed");});'
+          , true).then((result) => {
+            console.log(result);
+          });
   })
 
   xit('should get all webcontents', function () {
@@ -66,7 +82,7 @@ describe('The Dependency Checker', function () {
 
   })
 
-  it('should work', async function () {
+  xit('should work', async function () {
     const { remote } = require('electron');
     const mainProcess = remote.require('./main.js');
   });

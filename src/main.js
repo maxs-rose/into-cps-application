@@ -48,7 +48,7 @@ let devMode = intoCpsApp.getSettings().getValue(SettingKeys.SettingKeys.DEVELOPM
 console.info("Running in development mode: " + devMode);
 
 
-
+exports.test = (value) => {return value + value};
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -113,9 +113,7 @@ function createWindow() {
     });*/
 }
 
-function test(value) {
-  return value + value;
-}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
