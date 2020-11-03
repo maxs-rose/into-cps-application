@@ -43,35 +43,26 @@ describe('The Dependency Checker', function () {
 
   })
 
-  function mathtest(value) {
-    return value + value;
-  }
-
   // test function implemented directly in main.js for now.
-  xit('should execute javascript function', function () {
+  it('should execute javascript function', function () {
     return this.app.webContents.executeJavaScript(
     'const { remote } = require("electron");' +
-    'const mainProcess = remote.require("./main.js");' +
-    'mainProcess.test(1);'
+    'const functiontestprocess = remote.require("./functionaltestbed.js");' +
+    'functiontestprocess.test(1);'
       )
       .then(function (result) {
         console.log(result) 
         })
 
-  })
+  });
 
   it('should execute javascript dialog', function () {
     return this.app.webContents.executeJavaScript(
-      'const {spawn} = require("child_process");' + 
-          'const { dialog, shell } = require("electron");' + 
-          'const ls = spawn("java", ["-version"],{shell : true});' +
-        'ls.on("error", err => { console.error(err); return false; });' +
-        ' ls.on("close", (code, signal) => { if (code != 0) { dialog.showMessageBox( {title: "error", buttons: ["OK"], message: "Java wasn´t detected on your system \n" + "JRE is needed to run the COE"});}' + 
-        'console.log("the java dependency check subprocess has been closed");});'
-          , true).then((result) => {
-            console.log(result);
-          });
-  })
+      'const dialog = require("electron").remote.dialog;' +
+      'dialog.showMessageBox({type: "error", buttons: ["OK"],message:"Please install the: Co-simulation Orchestration Engine first."});', true).then((result) => {
+        console.log(result);
+      });
+  } );
 
   xit('should get all webcontents', function () {
     this.app.client.waitUntilWindowLoaded().then( app => {
