@@ -18,6 +18,7 @@
   "scripts": {
     "start": "electron dist/main.js",
     "test": "mocha",
+    "dist": "electron-builder --x64 -p never",
     "dist-linux": "electron-builder -l --x64 -p never",
     "dist-win": "electron-builder -w --x64 -p never",
     "dist-mac": "electron-builder -m --x64"
