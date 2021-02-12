@@ -3,7 +3,7 @@ name: Package
 on: 
    push:
      branches: 
-       - hdm/electron-builder
+       - development
 
 jobs:
   package:
@@ -11,14 +11,14 @@ jobs:
   
     strategy:
       matrix:
-        os: [macos-latest] #[ubuntu-latest,windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
 
     steps:
       - name: Checkout master branch
         uses: actions/checkout@v2
         with: 
-          ref: hdm/electron-builder
+          ref: development
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -60,14 +60,17 @@ jobs:
           name: INTO-CPS-Application Setup ${{ steps.get_version.outputs.VERSION }}.exe
         if: startsWith(matrix.os, 'windows')
 
-      #- name: Zip Darwin Version
-      #  run: cd pkg ; zip into-cps-app-${{ steps.get_version.outputs.VERSION }}-darwin-x64.zip . -rq
-      #  if: startsWith(matrix.os, 'mac')
+      - name: Upload Dmg
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./release/INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}.dmg
+          name: INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}.dmg
+        if: startsWith(matrix.os, 'mac')
 
-      #- name: Upload Darwin Version
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    path: ./pkg/into-cps-app-${{ steps.get_version.outputs.VERSION }}-darwin-x64.zip
-      #    name: darwin-archive.zip
-      #  if: startsWith(matrix.os, 'mac')
+      - name: Upload Darwin Zip
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./release/INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}-mac.zip
+          name: INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}-mac.zip
+        if: startsWith(matrix.os, 'mac')
 
