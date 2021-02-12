@@ -44,7 +44,7 @@ jobs:
         run: gulp prep-pkg
 
       - name: Package
-        run: npm run dist-linux
+        run: npm run dist
 
       - name: Upload Linux Version
         uses: actions/upload-artifact@v2
