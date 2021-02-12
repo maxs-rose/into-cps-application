@@ -47,17 +47,17 @@ jobs:
         run: npm run dist-linux
 
       - name: Upload Linux Version
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           path: ./release/INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}.AppImage
-          name: linux-archive.zip
+          name: INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}.AppImage
         if: startsWith(matrix.os, 'ubuntu')
 
       - name: Upload Windows Version
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           path: ./release/INTO-CPS-Application Setup ${{ steps.get_version.outputs.VERSION }}.exe
-          name: windows-archive.zip
+          name: INTO-CPS-Application Setup ${{ steps.get_version.outputs.VERSION }}.exe
         if: startsWith(matrix.os, 'windows')
 
       #- name: Zip Darwin Version
