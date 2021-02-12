@@ -49,16 +49,16 @@ jobs:
       - name: Upload Linux Version
         uses: actions/upload-artifact@v1
         with:
-          path: ./release/into-cps-app-${{ steps.get_version.outputs.VERSION }}
+          path: ./release/INTO-CPS-Application-${{ steps.get_version.outputs.VERSION }}
           name: linux-archive.zip
         if: startsWith(matrix.os, 'ubuntu')
 
-      #- name: Upload Windows Version
-      #  uses: actions/upload-artifact@v1
-      #  with:
-      #    path: ./zipped/pkg/into-cps-app-${{ steps.get_version.outputs.VERSION }}-win32-x64.zip
-      #    name: windows-archive.zip
-      #  if: startsWith(matrix.os, 'windows')
+      - name: Upload Windows Version
+        uses: actions/upload-artifact@v1
+        with:
+          path: ./release/INTO-CPS-Application Setup ${{ steps.get_version.outputs.VERSION }}.exe
+          name: windows-archive.zip
+        if: startsWith(matrix.os, 'windows')
 
       #- name: Zip Darwin Version
       #  run: cd pkg ; zip into-cps-app-${{ steps.get_version.outputs.VERSION }}-darwin-x64.zip . -rq
