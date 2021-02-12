@@ -18,12 +18,13 @@
   "scripts": {
     "start": "electron dist/main.js",
     "test": "mocha",
-    "dist": "electron-builder -lw --x64"
+    "dist-linux": "electron-builder -l --x64",
+    "dist-win": "electron-builder -w --x64"
   },
   "build": {
     "appId": "org.into-cps-association.into-cps-app",
     "copyright": "Copyright © 2021 INTO-CPS Association",
-    "productName": "INTO-CPS App",
+    "productName": "into-cps-app-",
     "electronVersion": "10.1.2",
     "files": ["**/*", "dist/**/*"],
     "directories": {
